@@ -1,0 +1,60 @@
+#!/usr/bin/env python3
+"""Import audited NSS support without replacing the official device target."""
+import hashlib
+import json
+import shutil
+import subprocess
+import sys
+import tarfile
+from pathlib import Path
+
+project = Path(__file__).resolve().parents[1]
+tree = Path(sys.argv[1]).resolve()
+lock = json.loads((project / 'sources.lock.json').read_text())
+assert subprocess.check_output(['git', '-C', str(tree), 'rev-parse', 'HEAD'], text=True).strip() == lock['immortalwrt']
+assert 'KERNEL_PATCHVER:=6.12' in (tree / 'target/linux/qualcommax/Makefile').read_text()
+protected = [
+    'target/linux/qualcommax/image/ipq807x.mk',
+    'target/linux/qualcommax/image/Makefile',
+    'target/linux/qualcommax/files/arch/arm64/boot/dts/qcom/ipq8072-ax9000-stock.dts',
+    'target/linux/qualcommax/ipq807x/base-files/lib/upgrade/platform.sh',
+    'target/linux/qualcommax/ipq807x/base-files/etc/hotplug.d/firmware/11-ath11k-caldata',
+]
+before = {p: hashlib.sha256((tree / p).read_bytes()).hexdigest() for p in protected}
+vendor = project / 'vendor/nss'
+for rel, digest in json.loads((vendor / 'manifest.json').read_text()).items():
+    source = vendor / rel
+    assert hashlib.sha256(source.read_bytes()).hexdigest() == digest, rel
+    target = tree / rel
+    assert not target.exists(), f'Unexpected upstream overlap: {rel}'
+    target.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(source, target)
+# Only add NSS hardware nodes to the official parent DTS. Partition/calibration
+# content remains byte-for-byte intact; the stock child continues to use SMEM.
+dts = tree / 'target/linux/qualcommax/files/arch/arm64/boot/dts/qcom/ipq8072-ax9000.dts'
+text = dts.read_text()
+anchor = '#include "ipq8074-ess.dtsi"'
+assert text.count(anchor) == 1
+dts.write_text(text.replace(anchor, anchor + '\n#include "ipq8074-nss.dtsi"'))
+cfg = tree / 'target/linux/qualcommax/config-6.12'
+cfg.write_text(cfg.read_text() + '\nCONFIG_SKB_RECYCLER=y\nCONFIG_SKB_RECYCLER_MULTI_CPU=y\n')
+# Import exactly one regular file, never blindly extract an untrusted archive.
+archive = project / 'inputs/generic-ax9000.tar.gz'
+audit = json.loads((project / 'reference/input-audit.json').read_text())
+assert hashlib.sha256(archive.read_bytes()).hexdigest() == audit[archive.name]['sha256']
+with tarfile.open(archive) as tar:
+    entries = tar.getmembers()
+    assert len(entries) == 1 and entries[0].isfile()
+    assert entries[0].name == 'lib/firmware/ath11k/QCN9074/hw1.0/board-2.bin'
+    board = tar.extractfile(entries[0]).read()
+    assert board.startswith(b'QCA-ATH11K'), 'Invalid ath11k board data header'
+    target = tree / 'package/firmware/ipq-wifi/files/board-xiaomi_ax9000.qcn9074'
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes(board)
+shutil.copytree(project / 'files', tree / 'files', dirs_exist_ok=True)
+for rel in ['etc/uci-defaults/zz-ax9000-v3', 'usr/bin/ax9000-nss-check']:
+    (tree / 'files' / rel).chmod(0o755)
+for p, digest in before.items():
+    assert hashlib.sha256((tree / p).read_bytes()).hexdigest() == digest, p
+(tree / 'protected-source.json').write_text(json.dumps(before, indent=2) + '\n')
+print('Official stock target and upgrade logic preserved; NSS and QCN9074 BDF imported.')

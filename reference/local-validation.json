@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-02",
+  "checks": {
+    "official_source_checkout": "passed",
+    "feeds_update_install": "passed",
+    "defconfig_required_packages": "passed",
+    "workflow_yaml": "passed",
+    "shell_python_syntax": "passed",
+    "kernel_patch_queue_6.12.103": "passed",
+    "host_x86_compile_skb_recycler_bonding_objects": "passed; target ARM64 compilation not covered",
+    "reference_fwtool_crc_metadata": "passed"
+  },
+  "pending": [
+    "full ARM64 firmware build",
+    "runtime firewall/ECM validation",
+    "NSS counters and throughput",
+    "wireless 80/160 MHz throughput",
+    "actual U-Boot input format acceptance"
+  ],
+  "excluded": [
+    "donor IPsec MTU changes",
+    "BROKEN NSS CFI cryptoapi",
+    "unverified shortcut-fe/fast-classifier",
+    "ath11k NSS Wi-Fi fork"
+  ]
+}
