@@ -24,6 +24,24 @@ jobs:
         shell: bash
     steps:
       - uses: actions/checkout@v4
+      - name: Reclaim runner disk and monitor capacity
+        run: |
+          mkdir -p logs artifacts
+          df -h > logs/disk-before-cleanup.txt
+          # Only remove unrelated preinstalled SDKs on this disposable Linux runner.
+          sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc /usr/local/.ghcup /opt/hostedtoolcache/CodeQL
+          if command -v docker >/dev/null; then
+            sudo docker system prune --all --force >/dev/null
+          fi
+          sudo apt-get clean
+          df -h | tee logs/disk-after-cleanup.txt
+          available_kb=$(df -Pk "$GITHUB_WORKSPACE" | awk 'NR==2 {print $4}')
+          if (( available_kb < 45 * 1024 * 1024 )); then
+            echo "::error::Less than 45 GiB free for the OpenWrt toolchain, kernel and Go build."
+            exit 1
+          fi
+          nohup bash -c 'while true; do date -u; df -h "$GITHUB_WORKSPACE"; free -h; sleep 60; done' > logs/resources.log 2>&1 < /dev/null &
+          echo "$!" > logs/resources.pid
       - name: Build dependencies
         run: |
           sudo apt-get update
@@ -55,6 +73,9 @@ jobs:
       - name: Save diagnostics
         if: always()
         run: |
+          if test -f logs/resources.pid; then kill "$(cat logs/resources.pid)" 2>/dev/null || true; fi
+          df -h > logs/disk-final.txt
+          free -h > logs/memory-final.txt
           for f in .config config.seed feeds.conf.default sources.lock.json protected-source.json source-changes.patch; do
             if test -f "build/$f"; then cp "build/$f" "logs/${f#.}"; fi
           done
