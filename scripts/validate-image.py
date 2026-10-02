@@ -7,6 +7,7 @@ import shutil
 import subprocess
 import sys
 import tarfile
+import tempfile
 from pathlib import Path
 
 tree, out = map(Path, sys.argv[1:3])
@@ -58,10 +59,20 @@ assert required_packages <= packages, sorted(required_packages - packages)
 for rel, digest in json.loads((tree / 'protected-source.json').read_text()).items():
     assert hashlib.sha256((tree / rel).read_bytes()).hexdigest() == digest, rel
 # Verify the board data actually ended up in the generated squashfs.
-roots = list((tree/'build_dir').glob('target-*/root-qualcommax/lib/firmware/ath11k/QCN9074/hw1.0/board-2.bin'))
-assert len(roots) == 1, roots
 imported = tree/'package/firmware/ipq-wifi/files/board-xiaomi_ax9000.qcn9074'
-assert roots[0].read_bytes() == imported.read_bytes(), 'QCN9074 BDF override missing'
+# ipq-wifi installs into rootfs-overlay, applied per device during image creation.
+# The shared root-qualcommax directory still contains the generic firmware BDF.
+# Check the actual squashfs inside the sysupgrade archive, not that staging tree.
+with tempfile.TemporaryDirectory() as tmp:
+    squashfs = Path(tmp) / 'root.squashfs'
+    with tarfile.open(image) as tar:
+        with squashfs.open('wb') as stream:
+            shutil.copyfileobj(tar.extractfile(prefix+'root'), stream)
+    board = subprocess.check_output([
+        str((tree/'staging_dir/host/bin/unsquashfs').resolve()), '-cat',
+        str(squashfs), 'lib/firmware/ath11k/QCN9074/hw1.0/board-2.bin',
+    ])
+    assert board == imported.read_bytes(), 'QCN9074 BDF override missing from final squashfs'
 factories = list(target.glob('*-xiaomi_ax9000-stock-squashfs-factory.ubi'))
 assert len(factories) <= 1
 for factory in factories:
