@@ -8,7 +8,8 @@
     "shell_python_syntax": "passed",
     "kernel_patch_queue_6.12.103": "passed",
     "host_x86_compile_skb_recycler_bonding_objects": "passed; target ARM64 compilation not covered",
-    "reference_fwtool_crc_metadata": "passed"
+    "reference_fwtool_crc_metadata": "passed",
+    "negative_guards": "passed: expand profile, missing ECM, corrupt metadata rejected"
   },
   "pending": [
     "full ARM64 firmware build",
@@ -22,5 +23,12 @@
     "BROKEN NSS CFI cryptoapi",
     "unverified shortcut-fe/fast-classifier",
     "ath11k NSS Wi-Fi fork"
-  ]
+  ],
+  "github": {
+    "repository": "https://github.com/xlz342/AX9000-v3-NSS",
+    "visibility": "private",
+    "commit": "d408f3d1a0452c2090e083ca4666f95f6d042c21",
+    "first_run": "https://github.com/xlz342/AX9000-v3-NSS/actions/runs/36976528408",
+    "status": "in_progress; full build pending"
+  }
 }
