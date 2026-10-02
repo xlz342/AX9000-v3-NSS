@@ -37,7 +37,16 @@ anchor = '#include "ipq8074-ess.dtsi"'
 assert text.count(anchor) == 1
 dts.write_text(text.replace(anchor, anchor + '\n#include "ipq8074-nss.dtsi"'))
 cfg = tree / 'target/linux/qualcommax/config-6.12'
-cfg.write_text(cfg.read_text() + '\nCONFIG_SKB_RECYCLER=y\nCONFIG_SKB_RECYCLER_MULTI_CPU=y\n')
+# OpenWrt keeps a complete kernel seed and uses syncconfig without stdin.
+# Explicitly answer every visible recycler prompt: kernel defaults alone still
+# count as NEW and abort a non-interactive build before any compilation.
+cfg.write_text(cfg.read_text() + '''
+CONFIG_SKB_RECYCLER=y
+CONFIG_SKB_RECYCLER_MULTI_CPU=y
+# CONFIG_SKB_RECYCLER_PREALLOC is not set
+CONFIG_SKB_RECYCLE_SIZE=2304
+# CONFIG_ALLOC_SKB_PAGE_FRAG_DISABLE is not set
+''')
 # Import exactly one regular file, never blindly extract an untrusted archive.
 archive = project / 'inputs/generic-ax9000.tar.gz'
 audit = json.loads((project / 'reference/input-audit.json').read_text())
