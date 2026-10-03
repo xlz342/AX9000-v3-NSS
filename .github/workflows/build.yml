@@ -60,6 +60,8 @@ jobs:
         run: |
           set -o pipefail
           make -j2 tools/install V=s 2>&1 | tee ../logs/tools.log
+          test -x staging_dir/host/bin/fwtool
+          test -x staging_dir/host/bin/unsquashfs4
           make target/linux/prepare V=s 2>&1 | tee ../logs/kernel-prepare.log
       - name: Download sources
         working-directory: build
