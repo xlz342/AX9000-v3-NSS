@@ -59,7 +59,7 @@ assert required_packages <= packages, sorted(required_packages - packages)
 for rel, digest in json.loads((tree / 'protected-source.json').read_text()).items():
     assert hashlib.sha256((tree / rel).read_bytes()).hexdigest() == digest, rel
 # Verify the board data actually ended up in the generated squashfs.
-imported = tree/'package/firmware/ipq-wifi/files/board-xiaomi_ax9000.qcn9074'
+imported = tree/'package/firmware/ipq-wifi/src/board-xiaomi_ax9000.qcn9074'
 # ipq-wifi installs into rootfs-overlay, applied per device during image creation.
 # The shared root-qualcommax directory still contains the generic firmware BDF.
 # Check the actual squashfs inside the sysupgrade archive, not that staging tree.
