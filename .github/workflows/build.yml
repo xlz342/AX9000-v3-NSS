@@ -60,8 +60,7 @@ jobs:
         run: |
           set -o pipefail
           make -j2 tools/install V=s 2>&1 | tee ../logs/tools.log
-          test -x staging_dir/host/bin/fwtool
-          test -x staging_dir/host/bin/unsquashfs4
+          test -x staging_dir/host/bin/unsquashfs4 || { echo '::error::tools/install did not produce unsquashfs4'; exit 1; }
           make target/linux/prepare V=s 2>&1 | tee ../logs/kernel-prepare.log
       - name: Download sources
         working-directory: build
@@ -74,7 +73,10 @@ jobs:
           set -o pipefail
           make -j2 V=s 2>&1 | tee ../logs/build.log || make -j1 V=s 2>&1 | tee ../logs/build-retry.log
       - name: Validate metadata, archive, package manifest and sizes
-        run: python3 scripts/validate-image.py build artifacts
+        run: |
+          # fwtool is built by package/system/fwtool/host during the full build.
+          test -x build/staging_dir/host/bin/fwtool || { echo '::error::Full build did not produce host fwtool'; exit 1; }
+          python3 scripts/validate-image.py build artifacts
       - name: Save diagnostics
         if: always()
         run: |
