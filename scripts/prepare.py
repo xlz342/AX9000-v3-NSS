@@ -57,7 +57,8 @@ with tarfile.open(archive) as tar:
     assert entries[0].name == 'lib/firmware/ath11k/QCN9074/hw1.0/board-2.bin'
     board = tar.extractfile(entries[0]).read()
     assert board.startswith(b'QCA-ATH11K'), 'Invalid ath11k board data header'
-    target = tree / 'package/firmware/ipq-wifi/files/board-xiaomi_ax9000.qcn9074'
+    # This release's Build/Prepare/Default copies ./src, not ./files.
+    target = tree / 'package/firmware/ipq-wifi/src/board-xiaomi_ax9000.qcn9074'
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_bytes(board)
 shutil.copytree(project / 'files', tree / 'files', dirs_exist_ok=True)
