@@ -69,7 +69,7 @@ with tempfile.TemporaryDirectory() as tmp:
         with squashfs.open('wb') as stream:
             shutil.copyfileobj(tar.extractfile(prefix+'root'), stream)
     board = subprocess.check_output([
-        str((tree/'staging_dir/host/bin/unsquashfs').resolve()), '-cat',
+        str((tree/'staging_dir/host/bin/unsquashfs4').resolve()), '-cat',
         str(squashfs), 'lib/firmware/ath11k/QCN9074/hw1.0/board-2.bin',
     ])
     assert board == imported.read_bytes(), 'QCN9074 BDF override missing from final squashfs'
