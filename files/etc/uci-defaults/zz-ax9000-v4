@@ -1,0 +1,12 @@
+#!/bin/sh
+uci -q set luci.main.mediaurlbase='/luci-static/argon'
+uci -q commit luci
+/etc/init.d/ax9000-nss-defaults enable
+/etc/init.d/ax9000-nss-defaults start
+/etc/init.d/ax9000-wifi-pbuf enable
+/etc/init.d/qca-nss-ecm enable
+# Preserve v3 SSH behavior: ed25519 works with Dropbear; OpenSSH is installed.
+# Enabling both on port 22 would conflict. See README for switching servers.
+/etc/init.d/sshd disable
+# Never enable Nikki DNS hijacking or alter WiFi/regulatory/PPPoE settings.
+exit 0

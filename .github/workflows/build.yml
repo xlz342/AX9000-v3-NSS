@@ -1,4 +1,4 @@
-name: AX9000-v3 NSS Edition (experimental)
+name: AX9000-v4 NSS WiFi Nikki (experimental)
 on:
   workflow_dispatch:
   push:
@@ -24,6 +24,8 @@ jobs:
         shell: bash
     steps:
       - uses: actions/checkout@v4
+      - name: Reject private backups and unexpected inputs
+        run: python3 scripts/check-source-inputs.py
       - name: Reclaim runner disk and monitor capacity
         run: |
           mkdir -p logs artifacts
@@ -54,6 +56,7 @@ jobs:
       - name: Checkout official release, import NSS and QCN9074 BDF, configure
         run: |
           set -o pipefail
+          python3 scripts/test-v4.py
           bash scripts/setup.sh "$GITHUB_WORKSPACE/build" 2>&1 | tee logs/setup.log
       - name: Prepare kernel (reject incompatible patches)
         working-directory: build
@@ -76,6 +79,11 @@ jobs:
           assert prepared[0].read_bytes() == source.read_bytes(), 'Custom QCN9074 BDF not imported during package prepare'
           print('Custom QCN9074 BDF package prepare verified')
           PY
+      - name: Prepare mac80211 and reject NSS WiFi patch conflicts
+        working-directory: build
+        run: |
+          set -o pipefail
+          make package/kernel/mac80211/prepare V=s 2>&1 | tee ../logs/wifi-prepare.log
       - name: Compile
         working-directory: build
         run: |
@@ -99,7 +107,7 @@ jobs:
       - name: Upload validated firmware
         uses: actions/upload-artifact@v4
         with:
-          name: AX9000-v3-NSS-experimental-${{ github.run_number }}
+          name: AX9000-v4-NSS-WiFi-Nikki-experimental-${{ github.run_number }}
           path: artifacts/
           if-no-files-found: error
           retention-days: 14
@@ -107,7 +115,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: AX9000-v3-diagnostics-${{ github.run_number }}
+          name: AX9000-v4-diagnostics-${{ github.run_number }}
           path: logs/
           if-no-files-found: warn
           retention-days: 14

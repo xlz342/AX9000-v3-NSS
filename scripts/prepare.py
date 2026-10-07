@@ -61,9 +61,14 @@ with tarfile.open(archive) as tar:
     target = tree / 'package/firmware/ipq-wifi/src/board-xiaomi_ax9000.qcn9074'
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_bytes(board)
+subprocess.run([sys.executable, str(project/'scripts/prepare-wifi.py'), str(tree)], check=True)
 shutil.copytree(project / 'files', tree / 'files', dirs_exist_ok=True)
-for rel in ['etc/uci-defaults/zz-ax9000-v3', 'usr/bin/ax9000-nss-check']:
+for rel in ['etc/uci-defaults/zz-ax9000-v4', 'usr/sbin/ax9000-wifi-nss', 'usr/sbin/ax9000-ecm-flush', 'root/ax9000-v4-check.sh', 'etc/init.d/ax9000-nss-defaults', 'etc/init.d/ax9000-wifi-pbuf']:
     (tree / 'files' / rel).chmod(0o755)
+rc = tree/'files/etc/rc.d'
+rc.mkdir(parents=True, exist_ok=True)
+for priority, name in [('18', 'ax9000-nss-defaults'), ('26', 'qca-nss-ecm'), ('95', 'ax9000-wifi-pbuf')]:
+    (rc/('S'+priority+name)).symlink_to('../init.d/'+name)
 for p, digest in before.items():
     assert hashlib.sha256((tree / p).read_bytes()).hexdigest() == digest, p
 (tree / 'protected-source.json').write_text(json.dumps(before, indent=2) + '\n')

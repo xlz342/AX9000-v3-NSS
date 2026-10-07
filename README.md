@@ -1,187 +1,89 @@
-# AX9000-v3 NSS Edition
+# AX9000-v4-NSS-WiFi-Nikki-experimental
 
-用于 Xiaomi AX9000 **stock 分区布局**的 ImmortalWrt 25.12.2 GitHub Actions 云编译项目。
-当前为实验性集成项目，尚未完成全量固件编译和 AX9000 实机验收，不能标注为已验证可刷固件。
+基于已构建成功、用户已验证有线 NSS 的 v3 提交 `e029280bd2932ac50622aeab1f0b840206c34265`。这是 **experimental build**；编译检查不能代替 AX9000 实机启动、Apple 认证、代理出口与吞吐验收。
 
-## 使用
+仅用于现有 **Xiaomi AX9000 stock 分区**设备：ImmortalWrt 25.12.2、Linux 6.12.103、qualcommax/ipq807x、`xiaomi_ax9000-stock`。不刷写 bootloader/MIBIB，不更改 ART、caldata、MTD、U-Boot 环境。没有包含 uboot.bin、mibib.bin 或用户配置备份。
 
-1. 在 GitHub 建立一个空仓库，例如 `AX9000-v3-NSS`。
-2. 将本目录内容上传到仓库根目录，必须包含隐藏的 `.github` 目录。
-   不要把整个 `AX9000-v3-NSS` 文件夹作为额外一层目录上传。
-3. 打开 Actions → AX9000-v3 NSS Edition (experimental) → Run workflow。
-4. 只有配置、编译、metadata、包清单、板级数据和容量检查都通过后，才上传 firmware artifact。
-   失败时下载 diagnostics artifact；检查 setup、kernel-prepare、build 日志。
+## 从 v3 保留的内容
 
-也可以用 Git 推送：
+`vendor/nss/` 的所有文件及哈希原样沿用，包括 NSS DTS 增量、0600–0607 的适用内核补丁、0981 skb recycler 及 v3 的三处重基修复。NSS packages 固定 `0d970dbf0185e3f53709bd803e8a466598023c57`（检查时也是 NSS-12.5-K6.x 分支 HEAD），NSS 核心 donor 固定 `d6848fa2ea00193b5b7d3973e3990da7f608027c`。NSS firmware 保持 **NSS.FW.12.5-210-HK.R**，保留 drv/dp/ECM、bridge/VLAN/PPPoE/crypto、IPv4/IPv6 加速。
 
-```sh
-git init
-git add .
-git commit -m "Add AX9000 stock ImmortalWrt 25.12.2 NSS build"
-git branch -M main
-git remote add origin https://github.com/YOUR_ACCOUNT/AX9000-v3-NSS.git
-git push -u origin main
-```
+保留官方 stock DTS、image recipe、sysupgrade 和 calibration hotplug；`prepare.py` 与最终验证器检查受保护源文件 SHA256。不通过改 metadata 冒充其他分区设备：官方兼容标识实际为 **`xiaomi,ax9000-stock`**，不是非 stock 的 `xiaomi,ax9000`。切勿强制忽略 LuCI 的兼容性检查。
 
-GitHub 官方 Ubuntu runner 使用 `-j2` 控制内存占用，超时时间为 6 小时。
-Actions 使用 `make defconfig` 自动完成 Kconfig 配置；`make menuconfig` 是可选的本地交互入口。
-全量构建需要数十 GB 空间；磁盘不足请使用空间更大的 Ubuntu runner。
+Argon/Argon config、Nikki/LuCI Nikki、SmartDNS/LuCI SmartDNS、OpenSSH server/keygen 沿用。默认 LAN 不改，国家码和发射功率不改。OpenSSH 已支持 ed25519，无须替换为不固定版本。保持 v3 的 Dropbear 22 端口服务；如需使用 OpenSSH 服务，先安装公钥并配置独立测试端口，确认能登录后再停用 Dropbear、启用 sshd，避免把自己锁在设备外。
 
-## 版本与设备兼容
+## Wi-Fi NSS 来源与适配
 
-- 官方源码：`immortalwrt/immortalwrt`，标签 `v25.12.2`，提交固定在 `sources.lock.json`。
-- 官方 feeds 保持发行版自带的固定提交。
-- target/subtarget/profile：`qualcommax/ipq807x/xiaomi_ax9000-stock`。
-- Linux：6.12.103，使用该发行版原始内核版本。
-- metadata 必须包含且只包含 **`xiaomi,ax9000-stock`**。
+Wi-Fi donor：[qosmio/openwrt-ipq main-nss](https://github.com/qosmio/openwrt-ipq/tree/92a2d104145c8d265851c4b388a41bd8e9c21cd9)，固定提交 `92a2d104145c8d265851c4b388a41bd8e9c21cd9`。导入其 `patches/nss/subsys` 与 `patches/nss/ath11k`；没有导入无关 ath10k NSS 或替换整个无线目录。
 
-你提供的参考固件的实际 metadata 为 `xiaomi,ax9000-stock`。
-要求中的 `xiaomi,ax9000` 是另一布局的标识，因此不能把它添加到 stock 固件兼容列表。
-项目不会伪造兼容标识，也不会用普通 AX9000 expand profile 替代 stock profile。
+该 donor 基于 backports 6.18.26，本项目保留 ImmortalWrt 的 **backports 6.18.39**。3 个补丁已针对新代码重基：RX histogram 保留新版有效 peer ID=0 处理；bitmap TX cleanup 保留 tx_status=NULL；BSS transition 的 peer 查找/monitor status 改为新版上下文。完整原厂补丁后再应用 NSS 补丁，本地 `patch --fuzz=0` 全部通过。详细记录见 `vendor/wifi/PROVENANCE.md`。保留官方 qcom-qmi-helpers 打包方式，开启 ath11k NSS、1GB profile 和 NSS WiFi/ext-vdev 接口；不启用要求 NSS 11.4 的 NSS mesh。
 
-官方 stock DTS、image recipe 和 platform sysupgrade 逻辑受到 SHA-256 保护。
-官方 AX9000 父 DTS 仅增加一行 NSS dtsi include，原有无线、calibration、分区内容保留。
-该 include 添加 NSS 硬件节点；不会替换整个 DTS。NSS reserved-memory 变更是 RAM 描述，
-不涉及 NAND/MTD 分区。stock 设备继续使用 SMEM 分区表。
+`generic-ax9000.tar.gz` 已解包审核：只有 `lib/firmware/ath11k/QCN9074/hw1.0/board-2.bin`，并非 C 源码补丁。沿用 v3 的精确文件导入到 ipq-wifi/src，然后校验 package prepare 与最终 squashfs 中的字节。因此它与 ath11k NSS 源码补丁分别合并，不覆盖 DTS、ART 或校准读取路径。
 
-项目没有刷写 MIBIB、U-Boot、U-Boot 环境、ART 或 calibration 数据的操作。
-你提供的两个 bootloader 文件仅记录哈希、长度及 MIBIB 分区参考信息；不进入固件。
-参考 sysupgrade 固件也不作为二进制基础重打包，不随仓库发布。
-这些文件不能代替读取实际路由器的 `/proc/mtd`、`ubinfo -a` 和设备型号。
+实验默认 `ath11k nss_offload=1 frame_mode=2`。提供 1GB Wi-Fi pbuf 配置，只调整 NSS 无线 buffer，不改变 v3 CPU governor/时钟/RPS。带补丁驱动同时支持普通路径。
 
-## NSS 实际集成范围
+## Apple 认证与无线回退
 
-固定来源：`qosmio/nss-packages` 的 NSS-12.5-K6.x 分支提交；
-内核集成从 `qosmio/openwrt-ipq` 的 25.12-nss 固定提交选择性导入。
+检查时 [上游 Apple EAPOL/authorization 问题 #95](https://github.com/qosmio/openwrt-ipq/issues/95) 仍开放，没有可确认修复并已验证 AX9000 的结论。donor 的 peer/BSS transition 修复已包含，但不宣称解决该问题。
 
-| 组件 | 配置 |
-|---|---|
-| NSS firmware | IPQ807x，QSDK 12.5 |
-| qca_nss_drv / qca_nss_dp | 必选；dp 保留官方 recipe |
-| qca_nss_ecm | 必选，NSS frontend |
-| qca_nss_clients | 上游拆分包：bridge-mgr、vlan-mgr、pppoe |
-| ECM classifier | 上游 default、MARK、DSCP；不是独立包 |
-| NSS crypto | qca-nss-crypto、nss-eip-firmware |
-| 内核支持 | ECM/client 导出接口、DSCP 扩展、skb recycler、NSS 硬件节点 |
-| shortcut-fe / fast-classifier | 不启用：所选 6.12 NSS feed 不提供已确认兼容的实现 |
-| NSS CFI cryptoapi | 不启用：上游标记 `@BROKEN`，不强行绕过 |
-| NSS IPsec clients | 不启用：donor 的 MTU 改动不适合直接覆盖 6.12.103 的边界检查 |
-| ath11k NSS Wi-Fi offload | 未集成，保留官方 ath11k 数据通路 |
-
-不能仅凭模块装入或速度较快认定 NSS NAT 生效。必须看到 ECM NSS frontend
-的 accelerated_count 和 NSS IPv4/IPv6 统计在真实 LAN↔WAN 转发期间增长。
-NSS crypto 不表示 Mihomo 的代理加密自动由 NSS 执行。
-
-## firewall4 / nftables / Nikki
-
-保留 firewall4 和 nftables。ECM 使用内核 netfilter/conntrack 转发路径，
-不是靠增加一条 nftables 规则就能启用。
-
-项目为 upstream ECM script include 增加 `fw4_compatible=1`，并在 firewall4
-重建规则时使旧 ECM 加速连接失效；移除上游可选的 NEW 连接速率限制脚本。
-这只是明确的集成修正，不能替代 firewall reload、丢包规则和代理流量的实机验证。
-关闭软件 flow offload 和 nft hardware flow offload，避免与 ECM 争用连接。
-
-Nikki 的两种 Mihomo provider 在该发行版触发递归 Kconfig 依赖；项目只安装固定版本
-`mihomo-meta`，排除未使用的 alpha recipe，避免递归依赖。
-
-默认 Nikki 未启用、SmartDNS 未接管 DNS，保留默认联网行为。
-启用 Nikki 时，在启动代理前停止 ECM；ECM 卸载失败则拒绝启动代理。
-Nikki 配置启用或 Mihomo 运行时，手动启动 ECM 也会被阻止。
-这是保守的代理兼容策略：代理模式下不承诺普通 NAT 仍由 NSS 加速。
-关闭 Nikki 并停止服务后，可手动恢复 NAT 加速：
+保持有线 LAN 管理连接。若 iPhone/Mac 无法完成认证，在 SSH 执行：
 
 ```sh
-uci set nikki.config.enabled='0'
-uci commit nikki
-/etc/init.d/nikki stop
-/etc/init.d/qca-nss-ecm restart
+ax9000-wifi-nss off
+reboot
 ```
 
-若后续需要“代理流量走 CPU，其他流量继续 NSS”，需要针对 Nikki 的具体
-REDIRECT/TPROXY/TUN 方式、fwmark 和 ECM classifier 编写并验证排除逻辑。
-当前项目不会假设任意 fwmark 都能自动排除代理流量。
-手动运行 Mihomo 或其他透明代理时，也应先停止 ECM；此保护只针对 Nikki 服务。
-
-## 无线数据的真实内容
-
-`inputs/generic-ax9000.tar.gz` 只有一个文件：
-`lib/firmware/ath11k/QCN9074/hw1.0/board-2.bin`。
-
-它是 BDF 板级数据，不是无线驱动源码 patch，也不是 ART 备份。
-通过官方 `ipq-wifi-xiaomi_ax9000` overlay 安装 QCN9074 BDF，避免覆盖
-IPQ8074 的原有 board data。产物检查验证实际 rootfs 中 BDF 与导入文件一致。
-使用官方 `kmod-ath11k-ahb`、`kmod-ath11k-pci` 和 QCN9074 firmware；
-不修改国家码、txpower、regdb、calibration 读取或默认无线配置。
-
-80/160 MHz 是否可用取决于该射频、当前合法国家码、信道/DFS、驱动和客户端。
-2.4 GHz 不支持 80/160 MHz。需要在 QCN9074 对应的 5 GHz radio 验证 80/160 MHz。
-不能从一个 BDF 推导“接近官方驱动性能”或宣称已经修复内核无线驱动。
-
-## 默认配置与 OpenSSH
-
-LAN 保留官方默认 `192.168.1.1`；保留设置升级时沿用原有 LAN 配置。
-Argon 默认主题，安装 Argon Config、Nikki LuCI、SmartDNS LuCI。
-OpenSSH 使用发行版固定 packages feed 的 10.3_p1，支持 Ed25519，不另选不匹配版本。
-预装 OpenSSH server/keygen，默认保留 Dropbear 的 SSH 入口，OpenSSH 禁用以免争用 22 端口。
-
-启用 OpenSSH 时，先配置密钥并在当前 SSH 会话保留恢复入口：
+这会持久化 `nss_offload=0 frame_mode=1`，仅关闭 Wi-Fi NSS；NSS 核心和有线 ECM 仍保留。重新实验：
 
 ```sh
-mkdir -p /root/.ssh
-chmod 700 /root/.ssh
-# 将自己的 ssh-ed25519 公钥放入 /root/.ssh/authorized_keys，再执行：
-chmod 600 /root/.ssh/authorized_keys
-ssh-keygen -A
-sshd -t
-/etc/init.d/dropbear stop
-/etc/init.d/dropbear disable
-/etc/init.d/sshd enable
-/etc/init.d/sshd start
+ax9000-wifi-nss on
+reboot
+ax9000-wifi-nss status
 ```
 
-另开客户端连接，确认 `ssh -o HostKeyAlgorithms=ssh-ed25519 root@192.168.1.1` 成功，
-再关闭原会话。项目不会生成共享私钥或预置账户密码。
+脚本不热卸载无线驱动，`status` 区分下次启动配置与当前参数。`/etc/modules.d/ath11k` 被加入 sysupgrade 保留列表。模块参数存在仅证明编译支持，不证明无线数据包已进入 NSS。
 
-## 产物与刷写边界
+## Nikki 与 ECM 共存
 
-预期 sysupgrade：
-`immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock-squashfs-sysupgrade.bin`。
+删除 v3 对 Nikki enabled/mihomo 的 ECM 启动阻拦，也删除 Nikki 启动前的 ECM stop。ECM 开机服务直接读取 `ecm.global.acceleration_engine=nss` 并传给 modprobe，不依赖旧 `/etc/modules.conf`。v4 每次启动在 network/firewall 前保持 flow_offloading=0、flow_offloading_hw=0、packet_steering=0，因此恢复私人网络备份后仍可保持这些要求。
 
-官方 UbiFit recipe 还提供 `*-xiaomi_ax9000-stock-squashfs-factory.ubi` 时，
-workflow 同时验证并上传。不会自行构造额外 factory.bin。
-factory.ubi 与 sysupgrade tar 的格式不同，不能仅改扩展名互换。
+`scripts/feed-fixes.py` 针对固定 Nikki 提交的真实函数修改：
 
-CI 检查 fwtool metadata、FIT kernel、squashfs、包清单、8–128 MiB 的 sysupgrade 大小、
-参考 MIBIB 的 rootfs 容量余量、受保护源码、BDF 安装及 factory UBI magic。
-你提供的 MIBIB 在 128 KiB eraseblock 假设下 rootfs 为 232 MiB；
-CI 预留 overlay 和 UBI 开销。实际 NAND 坏块及 UBI 余量仍应以实机为准。
+- `service_started()`：先成功安装 policy routing，生成临时 nft 文件并通过 `nft -c`，成功执行 nft transaction 后调用 `ax9000-ecm-flush`。
+- `cleanup()`：删除 Nikki nft/policy routing、完成清理后 flush；覆盖 stop、restart、reload。配置/订阅切换通过正常 Nikki reload/start 路径生效，单纯下载未启用的订阅不改变活动规则。
+- `firewall_include.sh`：firewall4 重建 TUN accept 规则后 flush；在 service_started 内调用时延后至完整安装之后。ECM 自身 fw4 include 也 flush。
+- helper 仅在 debugfs `defunct_all` 可写时写入 1，从不 rmmod ECM。不修改 Nikki 的 bypass、TCP redirect、TUN mark、table 或 DNS hijack 策略。
 
-已运行 ImmortalWrt stock 布局时优先走 LuCI sysupgrade；刷写前在设备执行
-`sysupgrade -T /tmp/固件文件.bin`，并核对 `ubus call system board`。
-不要使用 `sysupgrade -F` 绕过兼容检查。
-仅根据 uboot.bin 无法确认其 Web 刷机界面接受 sysupgrade tar，
-所以本项目不能承诺这两个格式都可直接通过你的 U-Boot 界面刷入。
-需要先确认该 U-Boot 的实际格式支持。
+DIRECT/bypass 返回 Linux forwarding 后由 ECM 加速；PROXY TCP 经 redirect、PROXY UDP 经 mark/TUN。此版本遵循用户实测的简单共存方案，**不能仅凭两组 counter 同时增长判定没有泄漏**。切换规则后会清理加速记录，但不销毁全部 conntrack；已经建立的 NAT/代理会话可能仍保留旧决定。验收应同时覆盖新建连接和已有长连接，必要时重新建立测试会话。Nikki 重启期间的上游服务规则空窗与 fail-open 行为没有被本项目改造成 fail-closed。
+
+SmartDNS 保持原有软件与用户配置；本项目不强制启用 Nikki IPv4/IPv6 DNS hijack。恢复后确认 SmartDNS 监听6053、dnsmasq上游127.0.0.1#6053、Nikki两种DNS hijack关闭。不会上传或内嵌用户订阅。
+
+## 云编译与输出
+
+在分支 `v4-nss-wifi-nikki` 运行 `.github/workflows/build.yml`（push 自动触发，也支持 Actions 的 Run workflow）。全部源码版本见 `sources.lock.json`；原厂 release feeds 的 commit pins 保持。kernel/mac80211 prepare 任何 patch reject 都失败；没有通过忽略失败跳过 ath11k。
+
+Actions 输出：
+
+- `AX9000-v4-NSS-WiFi-Nikki-experimental-<run_number>`：仅通过验证的 stock sysupgrade、原生 factory.ubi、manifest、metadata、容量报告和 SHA256SUMS。
+- `AX9000-v4-diagnostics-<run_number>`：最终 `.config`（保存为config）、config.seed、feeds revisions、完整日志、kernel/wifi patch application日志。
+
+必需文件：`immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock-squashfs-sysupgrade.bin`。最终 squashfs 检查 NSS 两个 core firmware、drv/dp/ecm/bridge/VLAN/PPPoE/crypto 模块、ath11k ELF 的 nss_offload/frame_mode modinfo、模块默认参数、ECM启动链接、诊断脚本与QCN9074 BDF。若 `ath11k.ko` 没有 nss_offload，禁止发布固件 artifact。
+
+## 刷机与恢复
+
+先保留成功 v3 的 sysupgrade 和私人备份，在有线连接下操作。核对下载 SHA256SUMS，LuCI选择 **stock squashfs-sysupgrade.bin**；建议全新配置启动后先做 NSS/无线检查，再从本地恢复 restore-ready 备份。不要把备份放入项目目录、GitHub、Actions artifact 或 Release。备份中缺省的 ECM/NSS/模块文件由本固件提供。
+
+U-Boot 接受 sysupgrade tar 还是 factory UBI 取决于当前 bootloader 的刷机页面；本项目不能仅凭二进制参考证明它接受任意格式。使用已验证的 stock 刷机流程，不改环境变量，不擦写 MIBIB/ART。如果 v4 无法稳定工作，通过已验证的 LuCI/U-Boot恢复流程刷回 v3 stock sysupgrade；无线认证故障优先使用上述 off+reboot，无须重刷。
 
 ## 实机验收
 
-1. 升级前后对比 `/proc/mtd`、`ubinfo -a`；确认 stock 型号和分区一致。
-2. Nikki 关闭，运行 `ax9000-nss-check`；检查 NSS firmware 无加载失败、ECM 存在、
-   firewall4 check 成功。模块加载不等同于 hardware offload。
-3. LAN 主机向 WAN 侧独立 iperf3 主机连续测试 60 秒，双向分别测试。
-   不要用路由器自身作端点。流量期间两次读取统计，确认 accelerated_count > 0
-   且 NSS 数据包/字节计数增长；停止 ECM 做对照，记录速度及 CPU 使用。
-4. 在受控测试网添加拒绝规则、reload firewall4，确认已有及新连接按规则停止。
-   检查 IPv4/IPv6、DHCP WAN 或实际使用的 PPPoE。存在规则绕过则停用 ECM。
-5. Nikki 启用，确认 ECM 不存在，代理出口/DNS/访问控制正确；不能用吞吐替代代理验收。
-6. 对所有 radio 检查 `iw phy`、`iw dev`、dmesg、calibration/firmware 报错。
-   在合法信道上分别测 QCN9074 80/160 MHz；记录协商宽度、PHY rate、吞吐、距离和 CPU。
-7. 验证 OpenSSH Ed25519 主机密钥及公钥认证。
+运行 `/root/ax9000-v4-check.sh`，保存空闲和测试后的两份输出。脚本只读，筛选诊断字段，不输出 PPPoE/WiFi密码、API secret、订阅或节点凭据。
 
-接近千兆 NAT、160 MHz 无线吞吐和代理损耗都是验收目标，目前不是已测结果。
+1. 冷启动：NSS FW12.5、core0/core1正常；ecm自动加载；所有必需模块存在；两个ath11k参数存在。
+2. DIRECT有线/无线分别测试：ECM IPv4/IPv6 accelerated_count非零，NSS create_requests/hash_hits/packet counters增长。没有流量时计数为0并不单独证明故障。
+3. 无线：2.4GHz、各5GHz/QCN9074、80/160MHz，Apple WPA认证、DHCP、断线重连、睡眠唤醒、漫游和持续传输；有问题先off+reboot，再对照v3。
+4. 开启Nikki：ecm仍加载；对**已配置必须代理**的域名分别发起新TCP与UDP流量；检查TCP redirect与UDP TUN计数，同时确认外部网站报告的实际出口为代理节点。IPv4和IPv6分开验证，防止IPv6直连绕过。
+5. 在持续DIRECT与PROXY长连接时测试Nikki stop/start/restart/reload、订阅/配置切换、firewall reload；观察规则安装和清理顺序、旧连接与新连接的出口，重复统计检查。仅Nikki控制面内更换节点而未重载nft并不触发系统规则安装。
+6. 若确认某类代理连接绕过，记录协议、mark、conntrack与出口证据，再按连接添加选择性排除；不要恢复“全局关闭ECM”。
 
-来源：[官方 profile](https://github.com/immortalwrt/immortalwrt/blob/v25.12.2/target/linux/qualcommax/image/ipq807x.mk)、
-[NSS packages](https://github.com/qosmio/nss-packages/tree/0d970dbf0185e3f53709bd803e8a466598023c57)、
-[NSS 内核集成](https://github.com/qosmio/openwrt-ipq/tree/d6848fa2ea00193b5b7d3973e3990da7f608027c)、
-[Nikki](https://github.com/nikkinikki-org/OpenWrt-nikki)。
+近千兆 NAT、160MHz 无线吞吐和代理性能均为实测目标，不是构建保证。Wi-Fi NSS、ECM共存和Apple兼容仍为实验功能。

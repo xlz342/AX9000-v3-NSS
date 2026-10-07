@@ -73,6 +73,33 @@ with tempfile.TemporaryDirectory() as tmp:
         str(squashfs), 'lib/firmware/ath11k/QCN9074/hw1.0/board-2.bin',
     ])
     assert board == imported.read_bytes(), 'QCN9074 BDF override missing from final squashfs'
+    rootfs = Path(tmp)/'rootfs'
+    subprocess.run([str((tree/'staging_dir/host/bin/unsquashfs4').resolve()),
+                    '-d', str(rootfs), str(squashfs)], check=True, stdout=subprocess.DEVNULL)
+    modules = {p.name.replace('-', '_'): p for p in (rootfs/'lib/modules').rglob('*.ko')}
+    required_modules = ['qca_nss_drv', 'qca_nss_dp', 'ecm', 'qca_nss_bridge_mgr',
+                        'qca_nss_vlan', 'qca_nss_pppoe', 'qca_nss_crypto', 'ath11k']
+    for name in required_modules:
+        assert name+'.ko' in modules, f'Missing module: {name}'
+        assert modules[name+'.ko'].stat().st_size > 1024
+    ath11k = modules['ath11k.ko'].read_bytes()
+    assert b'parmtype=nss_offload:' in ath11k, 'ath11k NSS parameter absent'
+    assert b'parmtype=frame_mode:' in ath11k, 'ath11k frame_mode parameter absent'
+    assert (rootfs/'etc/modules.d/ath11k').read_text().strip() == 'ath11k nss_offload=1 frame_mode=2'
+    assert "option acceleration_engine 'nss'" in (rootfs/'etc/config/ecm').read_text()
+    assert list((rootfs/'etc/rc.d').glob('S*qca-nss-ecm')), 'ECM boot service disabled'
+    for name in ['ax9000-nss-defaults', 'ax9000-wifi-pbuf']:
+        assert list((rootfs/'etc/rc.d').glob('S*'+name)), name
+    for rel in ['root/ax9000-v4-check.sh', 'usr/sbin/ax9000-wifi-nss', 'usr/sbin/ax9000-ecm-flush']:
+        assert (rootfs/rel).stat().st_mode & 0o111, rel
+    assert (rootfs/'etc/config/nss').is_file()
+    for core in [0, 1]:
+        fw = rootfs/f'lib/firmware/qca-nss{core}-retail.bin'
+        assert fw.is_file() and fw.stat().st_size > 100000, f'NSS core{core} firmware missing'
+    nikki_init = (rootfs/'etc/init.d/nikki').read_text()
+    assert 'ax9000-ecm-flush' in nikki_init
+    assert 'qca-nss-ecm stop' not in nikki_init and 'rmmod ecm' not in nikki_init
+    assert 'Nikki enabled: ECM remains stopped' not in (rootfs/'etc/init.d/qca-nss-ecm').read_text()
 factories = list(target.glob('*-xiaomi_ax9000-stock-squashfs-factory.ubi'))
 assert len(factories) <= 1
 for factory in factories:
@@ -89,7 +116,7 @@ report = {
 out.mkdir(parents=True, exist_ok=True)
 for p in [image, manifest, metadata_file, *factories]:
     shutil.copyfile(p, out / p.name)
-for name in ['profiles.json', 'sha256sums', 'config.buildinfo', 'feeds.buildinfo', 'version.buildinfo']:
+for name in ['profiles.json', 'config.buildinfo', 'feeds.buildinfo', 'version.buildinfo']:
     if (target/name).exists():
         shutil.copyfile(target/name, out/name)
 (out/'validation.json').write_text(json.dumps(report, indent=2)+'\n')
