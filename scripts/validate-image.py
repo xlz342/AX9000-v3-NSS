@@ -74,8 +74,15 @@ with tempfile.TemporaryDirectory() as tmp:
     ])
     assert board == imported.read_bytes(), 'QCN9074 BDF override missing from final squashfs'
     rootfs = Path(tmp)/'rootfs'
+    # Extract only acceptance inputs: unprivileged runners cannot create /dev nodes.
+    # Keep extraction errors fatal; never suppress missing/corrupt firmware data.
+    acceptance_paths = ['lib/modules', 'lib/firmware', 'etc/config/ecm',
+                        'etc/config/nss', 'etc/init.d', 'etc/modules.d/ath11k',
+                        'etc/rc.d', 'root/ax9000-v4-check.sh',
+                        'usr/sbin/ax9000-wifi-nss', 'usr/sbin/ax9000-ecm-flush']
     subprocess.run([str((tree/'staging_dir/host/bin/unsquashfs4').resolve()),
-                    '-d', str(rootfs), str(squashfs)], check=True, stdout=subprocess.DEVNULL)
+                    '-d', str(rootfs), str(squashfs), *acceptance_paths],
+                   check=True, stdout=subprocess.DEVNULL)
     modules = {p.name.replace('-', '_'): p for p in (rootfs/'lib/modules').rglob('*.ko')}
     required_modules = ['qca_nss_drv', 'qca_nss_dp', 'ecm', 'qca_nss_bridge_mgr',
                         'qca_nss_vlan', 'qca_nss_pppoe', 'qca_nss_crypto', 'ath11k']
