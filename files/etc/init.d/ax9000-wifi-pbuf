@@ -1,0 +1,14 @@
+#!/bin/sh /etc/rc.common
+# NSS WiFi buffer values from qosmio main-nss 92a2d104, 1GB profile.
+# Do not change v3 CPU governor, clocks, packet steering or RPS settings.
+START=95
+start() {
+    [ "$(cat /sys/module/ath11k/parameters/nss_offload 2>/dev/null)" = 'Y' ] ||
+    [ "$(cat /sys/module/ath11k/parameters/nss_offload 2>/dev/null)" = '1' ] || return 0
+    [ -d /proc/sys/dev/nss/n2hcfg ] || return 0
+    if [ "$(sysctl -n dev.nss.n2hcfg.extra_pbuf_core0)" = 0 ]; then
+        sysctl -w dev.nss.n2hcfg.extra_pbuf_core0=10000000
+    fi
+    sysctl -w dev.nss.n2hcfg.n2h_high_water_core0=72512
+    sysctl -w dev.nss.n2hcfg.n2h_wifi_pool_buf=36864
+}

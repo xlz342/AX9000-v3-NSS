@@ -1,0 +1,10 @@
+{
+  "immortalwrt": "4fc16f2985a358bd43bb522e43f05395fcbd6ed5",
+  "nss_packages": "0d970dbf0185e3f53709bd803e8a466598023c57",
+  "nss_donor": "d6848fa2ea00193b5b7d3973e3990da7f608027c",
+  "nikki": "7b203f6c4c5e94c6c0026acb301090aa1d310e7f",
+  "argon": "23c3e525578374d6b20f5e7b93d27874cd01a252",
+  "argon_config": "3e099a37c3f71d0de677f1b6b0f4bffd57d91dac",
+  "wifi_donor": "92a2d104145c8d265851c4b388a41bd8e9c21cd9",
+  "v3_baseline": "e029280bd2932ac50622aeab1f0b840206c34265"
+}
