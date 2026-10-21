@@ -1,0 +1,10 @@
+#!/bin/sh /etc/rc.common
+START=18
+start() {
+    # Apply before network/firewall, including after restoring user settings.
+    uci -q set firewall.@defaults[0].flow_offloading='0'
+    uci -q set firewall.@defaults[0].flow_offloading_hw='0'
+    uci -q set network.globals.packet_steering='0'
+    uci -q commit firewall
+    uci -q commit network
+}

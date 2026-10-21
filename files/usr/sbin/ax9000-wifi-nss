@@ -1,0 +1,25 @@
+#!/bin/sh
+set -eu
+case "${1:-status}" in
+    on) params='nss_offload=1 frame_mode=2' ;;
+    off) params='nss_offload=0 frame_mode=1' ;;
+    status)
+        printf 'Next boot: '; cat /etc/modules.d/ath11k
+        for name in nss_offload frame_mode; do
+            printf 'Live %s: ' "$name"
+            if [ -r "/sys/module/ath11k/parameters/$name" ]; then
+                cat "/sys/module/ath11k/parameters/$name"
+            else
+                echo 'unavailable (ath11k not loaded or unsupported)'
+            fi
+        done
+        exit 0 ;;
+    *) echo 'Usage: ax9000-wifi-nss on|off|status' >&2; exit 2 ;;
+esac
+# Atomic persistent update; do not unload radios or disturb wired NSS/ECM.
+tmp=$(mktemp /etc/modules.d/.ath11k.XXXXXX)
+trap 'rm -f "$tmp"' EXIT HUP INT TERM
+printf 'ath11k %s\n' "$params" > "$tmp"
+chmod 644 "$tmp"
+mv "$tmp" /etc/modules.d/ath11k
+echo "Saved: $params. Reboot to apply."

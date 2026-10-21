@@ -1,0 +1,9 @@
+#!/bin/sh
+/etc/init.d/ax9000-nss-defaults enable
+/etc/init.d/ax9000-nss-defaults start
+/etc/init.d/ax9000-wifi-pbuf enable
+/etc/init.d/qca-nss-ecm enable
+for service in passwall miniupnpd airconnect uuplugin; do
+    /etc/init.d/$service disable
+done
+exit 0

@@ -1,0 +1,5 @@
+config ecm 'global'
+        option acceleration_engine 'nss'
+
+config ecm 'general'
+        option enable_bridge_filtering '0'
