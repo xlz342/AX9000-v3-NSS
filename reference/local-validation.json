@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-02",
+  "checks": {
+    "official_source_checkout": "passed",
+    "feeds_update_install": "passed",
+    "defconfig_required_packages": "passed",
+    "workflow_yaml": "passed",
+    "shell_python_syntax": "passed",
+    "kernel_patch_queue_6.12.103": "passed",
+    "host_x86_compile_skb_recycler_bonding_objects": "passed; target ARM64 compilation not covered",
+    "reference_fwtool_crc_metadata": "passed",
+    "negative_guards": "passed: expand profile, missing ECM, corrupt metadata rejected",
+    "recycler_syncconfig_regression": "passed: old seed prompts reproduced; fixed seed syncconfig passes with stdin closed and no NEW prompts"
+  },
+  "pending": [
+    "full ARM64 firmware build",
+    "runtime firewall/ECM validation",
+    "NSS counters and throughput",
+    "wireless 80/160 MHz throughput",
+    "actual U-Boot input format acceptance"
+  ],
+  "excluded": [
+    "donor IPsec MTU changes",
+    "BROKEN NSS CFI cryptoapi",
+    "unverified shortcut-fe/fast-classifier",
+    "ath11k NSS Wi-Fi fork"
+  ],
+  "github": {
+    "repository": "https://github.com/xlz342/AX9000-v3-NSS",
+    "visibility": "private",
+    "commit": "d408f3d1a0452c2090e083ca4666f95f6d042c21",
+    "first_run": "https://github.com/xlz342/AX9000-v3-NSS/actions/runs/36976528408",
+    "first_run_status": "failed: unspecified SKB_RECYCLER_PREALLOC and SKB_RECYCLE_SIZE"
+  }
+}

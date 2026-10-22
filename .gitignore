@@ -1,0 +1,13 @@
+/build/
+/logs/
+/artifacts/
+__pycache__/
+*restore-ready*
+*backup*
+*.tar.gz
+!inputs/generic-ax9000.tar.gz
+*.bin
+*.ubi
+*.key
+
+local-vendor/

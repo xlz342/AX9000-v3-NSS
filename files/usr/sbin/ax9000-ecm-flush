@@ -1,0 +1,10 @@
+#!/bin/sh
+# Call after routing/firewall changes are committed. No module unload.
+node=/sys/kernel/debug/ecm/ecm_db/defunct_all
+if [ -w "$node" ]; then
+    if ! printf '1\n' > "$node"; then
+        logger -t AX9000-NSS 'ECM defunct_all write failed'
+        exit 1
+    fi
+fi
+exit 0

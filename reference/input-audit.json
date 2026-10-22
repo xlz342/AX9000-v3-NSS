@@ -1,0 +1,177 @@
+{
+  "generic-ax9000.tar.gz": {
+    "size": 17238,
+    "sha256": "42a532c1cfd31cb555f7df2a2b71863b2ad8536ec6b542f05ce545a29ebd9418"
+  },
+  "immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock-squashfs-sysupgrade.bin": {
+    "size": 18678046,
+    "sha256": "66ed4bbd8b581f2a6a672fbdb8e9d2ed4a543483e7c256891dc69334d3531be7"
+  },
+  "mibib.bin": {
+    "size": 262144,
+    "sha256": "2d79c1b15b8946af733dba5fff5e33bf3ba18863ed734710bd2a5e48fc469c11"
+  },
+  "uboot.bin": {
+    "size": 653422,
+    "sha256": "80908e502add45ee6aa7ad83aa16ec2c3c8bf27b572ac0f9c3fe404b94fc0007"
+  },
+  "base_metadata": {
+    "metadata_version": "1.1",
+    "compat_version": "1.0",
+    "supported_devices": [
+      "xiaomi,ax9000-stock"
+    ],
+    "version": {
+      "dist": "ImmortalWrt",
+      "version": "25.12.2",
+      "revision": "r38135-0c4cd0f9920a",
+      "target": "qualcommax/ipq807x",
+      "board": "xiaomi_ax9000-stock"
+    }
+  },
+  "mibib_system_partition_table": {
+    "version": 4,
+    "entries": [
+      {
+        "name": "0:SBL1",
+        "offset_blocks": 0,
+        "length_blocks": 8,
+        "attributes": "0xffff"
+      },
+      {
+        "name": "0:MIBIB",
+        "offset_blocks": 8,
+        "length_blocks": 8,
+        "attributes": "0xffff"
+      },
+      {
+        "name": "0:BOOTCONFIG",
+        "offset_blocks": 16,
+        "length_blocks": 4,
+        "attributes": "0xffff"
+      },
+      {
+        "name": "0:BOOTCONFIG1",
+        "offset_blocks": 20,
+        "length_blocks": 4,
+        "attributes": "0xffff"
+      },
+      {
+        "name": "0:QSEE",
+        "offset_blocks": 24,
+        "length_blocks": 24,
+        "attributes": "0xffff"
+      },
+      {
+        "name": "0:QSEE_1",
+        "offset_blocks": 48,
+        "length_blocks": 24,
+        "attributes": "0xffff"
+      },
+      {
+        "name": "0:DEVCFG",
+        "offset_blocks": 72,
+        "length_blocks": 4,
+        "attributes": "0xffff"
+      },
+      {
+        "name": "0:DEVCFG_1",
+        "offset_blocks": 76,
+        "length_blocks": 4,
+        "attributes": "0xffff"
+      },
+      {
+        "name": "0:APDP",
+        "offset_blocks": 80,
+        "length_blocks": 4,
+        "attributes": "0xffff"
+      },
+      {
+        "name": "0:APDP_1",
+        "offset_blocks": 84,
+        "length_blocks": 4,
+        "attributes": "0xffff"
+      },
+      {
+        "name": "0:RPM",
+        "offset_blocks": 88,
+        "length_blocks": 4,
+        "attributes": "0xffff"
+      },
+      {
+        "name": "0:RPM_1",
+        "offset_blocks": 92,
+        "length_blocks": 4,
+        "attributes": "0xffff"
+      },
+      {
+        "name": "0:CDT",
+        "offset_blocks": 96,
+        "length_blocks": 4,
+        "attributes": "0xffff"
+      },
+      {
+        "name": "0:CDT_1",
+        "offset_blocks": 100,
+        "length_blocks": 4,
+        "attributes": "0xffff"
+      },
+      {
+        "name": "0:APPSBLENV",
+        "offset_blocks": 104,
+        "length_blocks": 4,
+        "attributes": "0xffff"
+      },
+      {
+        "name": "0:APPSBL",
+        "offset_blocks": 108,
+        "length_blocks": 8,
+        "attributes": "0xffff"
+      },
+      {
+        "name": "0:APPSBL_1",
+        "offset_blocks": 116,
+        "length_blocks": 8,
+        "attributes": "0xffff"
+      },
+      {
+        "name": "0:ART",
+        "offset_blocks": 124,
+        "length_blocks": 4,
+        "attributes": "0xffff"
+      },
+      {
+        "name": "bdata",
+        "offset_blocks": 128,
+        "length_blocks": 4,
+        "attributes": "0xffff"
+      },
+      {
+        "name": "crash",
+        "offset_blocks": 132,
+        "length_blocks": 4,
+        "attributes": "0xffff"
+      },
+      {
+        "name": "crash_syslog",
+        "offset_blocks": 136,
+        "length_blocks": 4,
+        "attributes": "0xffff"
+      },
+      {
+        "name": "rootfs",
+        "offset_blocks": 140,
+        "length_blocks": 1856,
+        "attributes": "0xffff"
+      },
+      {
+        "name": "cfg_bak",
+        "offset_blocks": 1996,
+        "length_blocks": 4,
+        "attributes": "0xffff"
+      }
+    ],
+    "assumed_eraseblock_bytes": 131072,
+    "note": "Decode of supplied file only; live /proc/mtd and ubinfo must confirm."
+  }
+}

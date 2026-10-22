@@ -1,0 +1,3 @@
+#!/bin/sh
+for service in passwall miniupnpd airconnect uuplugin; do /etc/init.d/$service disable; done
+exit 0
