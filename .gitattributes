@@ -1,3 +1,6 @@
 * text=auto eol=lf
+vendor/** -text
+inputs/** -text
 *.bin binary
+*.ubi binary
 *.gz binary
