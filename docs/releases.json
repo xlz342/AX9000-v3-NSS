@@ -1,0 +1,473 @@
+{
+  "indexed_on": "2026-10-25",
+  "repository": "xlz342/AX9000-v3-NSS",
+  "releases": [
+    {
+      "tag": "AX9000-v3-NSS-8",
+      "url": "https://github.com/xlz342/AX9000-v3-NSS/releases/tag/AX9000-v3-NSS-8",
+      "prerelease": true,
+      "assets": [
+        {
+          "name": "AX9000-v3-NSS-experimental-8.zip",
+          "size": 81934929,
+          "digest": "sha256:8303844e3716aa9e918d44c9754f639b9a344c0e213e49fe705cf286a414222c",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v3-NSS-8/AX9000-v3-NSS-experimental-8.zip"
+        },
+        {
+          "name": "config.buildinfo",
+          "size": 2862,
+          "digest": "sha256:3c47d4aabe19646c3531eb0204bcebe491cc85009cf211801356a494228986a3",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v3-NSS-8/config.buildinfo"
+        },
+        {
+          "name": "feeds.buildinfo",
+          "size": 696,
+          "digest": "sha256:c1e52b90e8d616d4f281e083b468cfec33bfabccc4cf23141abfabbd59e6a211",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v3-NSS-8/feeds.buildinfo"
+        },
+        {
+          "name": "immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock-squashfs-factory.ubi",
+          "size": 42729472,
+          "digest": "sha256:d649964da21ee5fff5733d9d0aac51070a239580ae468f072c997bd0ace75510",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v3-NSS-8/immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock-squashfs-factory.ubi"
+        },
+        {
+          "name": "immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock-squashfs-sysupgrade.bin",
+          "size": 40991006,
+          "digest": "sha256:0d57a333077f2566815ed0cab17a69124cd0033c5640ef6692dc246460a618c4",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v3-NSS-8/immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock-squashfs-sysupgrade.bin"
+        },
+        {
+          "name": "immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock.manifest",
+          "size": 8518,
+          "digest": "sha256:a92c412c08e8a7c3a726992c925118cf840375cd39c923bd7eb1cf8a5dde20fd",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v3-NSS-8/immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock.manifest"
+        },
+        {
+          "name": "profiles.json",
+          "size": 2301,
+          "digest": "sha256:624ebd4d0ffa9c7d2221a4e3a4fb6934600857a15539afd29de97835084f8378",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v3-NSS-8/profiles.json"
+        },
+        {
+          "name": "run8-upstream-image-checksums.txt",
+          "size": 904,
+          "digest": "sha256:b5877afd7efad17dced560f1140ea8eca88023bcf1541bf38f6cb1b7725762ef",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v3-NSS-8/run8-upstream-image-checksums.txt"
+        },
+        {
+          "name": "SHA256SUMS",
+          "size": 1007,
+          "digest": "sha256:cf351398dcff5ff28d4091c77adf8513d8a567ddd8dfb8870948600bdf092f34",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v3-NSS-8/SHA256SUMS"
+        },
+        {
+          "name": "validated-metadata.json",
+          "size": 262,
+          "digest": "sha256:decffeb38f2e48a654a20a40114a0fbd4dedd55598bb24990467fe1990c4930c",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v3-NSS-8/validated-metadata.json"
+        },
+        {
+          "name": "validation.json",
+          "size": 858,
+          "digest": "sha256:261eb0ad1ed17316c0a5c5f3566d7878eb0c4e2f57f884988aa73f296bc26d16",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v3-NSS-8/validation.json"
+        },
+        {
+          "name": "version.buildinfo",
+          "size": 20,
+          "digest": "sha256:2803fdd1bb171425b171068dc901dbd832b03d3ae26dd7e2499711bce0833b00",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v3-NSS-8/version.buildinfo"
+        }
+      ]
+    },
+    {
+      "tag": "AX9000-v4-NSS-11",
+      "url": "https://github.com/xlz342/AX9000-v3-NSS/releases/tag/AX9000-v4-NSS-11",
+      "prerelease": true,
+      "assets": [
+        {
+          "name": "config.buildinfo",
+          "size": 3044,
+          "digest": "sha256:b6f6940c0b7306121fd8e274a62f541a946a67ef9c501b8178369f209344689c",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-NSS-11/config.buildinfo"
+        },
+        {
+          "name": "feeds.buildinfo",
+          "size": 696,
+          "digest": "sha256:c1e52b90e8d616d4f281e083b468cfec33bfabccc4cf23141abfabbd59e6a211",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-NSS-11/feeds.buildinfo"
+        },
+        {
+          "name": "immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock-squashfs-factory.ubi",
+          "size": 42729472,
+          "digest": "sha256:b1d03a0bb3c40e6154422241e81130a865d94e0d82f079b5c5d96d30edf0e718",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-NSS-11/immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock-squashfs-factory.ubi"
+        },
+        {
+          "name": "immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock-squashfs-sysupgrade.bin",
+          "size": 41001246,
+          "digest": "sha256:3f7315892028c385aaa6d0c33145ab93872bf442765ab250655fb9420b1c35c9",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-NSS-11/immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock-squashfs-sysupgrade.bin"
+        },
+        {
+          "name": "immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock.manifest",
+          "size": 8518,
+          "digest": "sha256:a92c412c08e8a7c3a726992c925118cf840375cd39c923bd7eb1cf8a5dde20fd",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-NSS-11/immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock.manifest"
+        },
+        {
+          "name": "profiles.json",
+          "size": 2312,
+          "digest": "sha256:3f01f4bc745750d8ac99a6f022e706265a9e73315b06e2c54e3bcdccdb04fe8a",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-NSS-11/profiles.json"
+        },
+        {
+          "name": "SHA256SUMS",
+          "size": 930,
+          "digest": "sha256:32972d8a8ff65e16f844b7befe8f27a64b3385efad7286c65427b3a071f02bf0",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-NSS-11/SHA256SUMS"
+        },
+        {
+          "name": "validated-metadata.json",
+          "size": 262,
+          "digest": "sha256:decffeb38f2e48a654a20a40114a0fbd4dedd55598bb24990467fe1990c4930c",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-NSS-11/validated-metadata.json"
+        },
+        {
+          "name": "validation.json",
+          "size": 858,
+          "digest": "sha256:cac3ab711d6b4cb661c3e181ee54791249789576dd8f1bf4e43200642018799f",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-NSS-11/validation.json"
+        },
+        {
+          "name": "version.buildinfo",
+          "size": 20,
+          "digest": "sha256:2803fdd1bb171425b171068dc901dbd832b03d3ae26dd7e2499711bce0833b00",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-NSS-11/version.buildinfo"
+        }
+      ]
+    },
+    {
+      "tag": "AX9000-local-PassWall-20261022",
+      "url": "https://github.com/xlz342/AX9000-v3-NSS/releases/tag/AX9000-local-PassWall-20261022",
+      "prerelease": true,
+      "assets": [
+        {
+          "name": "AX9000-local-PassWall-20261022-build-records.zip",
+          "size": 238126,
+          "digest": "sha256:43233b6df2bc26a6097155ee7224844344de50bfa96ddd84dea53f7d719ee3b8",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-20261022/AX9000-local-PassWall-20261022-build-records.zip"
+        },
+        {
+          "name": "config.buildinfo",
+          "size": 4592,
+          "digest": "sha256:f23237d70ee35c6952082fc34b8328a50d8401bdc712d6f6efb313d080dcb5b1",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-20261022/config.buildinfo"
+        },
+        {
+          "name": "config.seed",
+          "size": 4592,
+          "digest": "sha256:f23237d70ee35c6952082fc34b8328a50d8401bdc712d6f6efb313d080dcb5b1",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-20261022/config.seed"
+        },
+        {
+          "name": "feeds.buildinfo",
+          "size": 696,
+          "digest": "sha256:c1e52b90e8d616d4f281e083b468cfec33bfabccc4cf23141abfabbd59e6a211",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-20261022/feeds.buildinfo"
+        },
+        {
+          "name": "immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock-squashfs-factory.ubi",
+          "size": 40763392,
+          "digest": "sha256:3e9827d8d26e738515ddf5eb78861b1bf5a0cad9ffa8377000a0ff05a04e6777",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-20261022/immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock-squashfs-factory.ubi"
+        },
+        {
+          "name": "immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock-squashfs-sysupgrade.bin",
+          "size": 39096606,
+          "digest": "sha256:a8a2686eaa050f3d83702cb0694a1d84af815608d910b124a8d167c819a0d8c0",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-20261022/immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock-squashfs-sysupgrade.bin"
+        },
+        {
+          "name": "immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock.manifest",
+          "size": 9327,
+          "digest": "sha256:4f57f17f641eaa76baa0543a7fcf3fe965ecdc7da1f065f113d24035f36e1d2c",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-20261022/immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock.manifest"
+        },
+        {
+          "name": "local-packages.lock.json",
+          "size": 739,
+          "digest": "sha256:6a0e4a1c66caa70d17a3fc16d6ca1f515648b89d7adc86fea9b7521b4fb0458d",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-20261022/local-packages.lock.json"
+        },
+        {
+          "name": "profiles.json",
+          "size": 2305,
+          "digest": "sha256:2263405c549fcb15319b614eb6376c9e28439699a3b5b260344ecd327b279606",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-20261022/profiles.json"
+        },
+        {
+          "name": "README-local.txt",
+          "size": 521,
+          "digest": "sha256:789d5150a6053feca2d27824514688fd576c777a0ed3ff4369c0f8969dee004d",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-20261022/README-local.txt"
+        },
+        {
+          "name": "SHA256SUMS",
+          "size": 1266,
+          "digest": "sha256:db83353678753862f6a9a060a1479b42342a097eb73107cd4f50a79265041475",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-20261022/SHA256SUMS"
+        },
+        {
+          "name": "sources.lock.json",
+          "size": 478,
+          "digest": "sha256:967e03d997124cbac49637704f19b3865b99ed79a1c8759831e8ace12bc3827f",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-20261022/sources.lock.json"
+        },
+        {
+          "name": "validated-metadata.json",
+          "size": 262,
+          "digest": "sha256:decffeb38f2e48a654a20a40114a0fbd4dedd55598bb24990467fe1990c4930c",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-20261022/validated-metadata.json"
+        },
+        {
+          "name": "validation.json",
+          "size": 858,
+          "digest": "sha256:edfc52e05adfa144b35e68f3abb670077f2fe8f04e324ffe8bbd9fae8a44b68f",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-20261022/validation.json"
+        },
+        {
+          "name": "version.buildinfo",
+          "size": 20,
+          "digest": "sha256:2803fdd1bb171425b171068dc901dbd832b03d3ae26dd7e2499711bce0833b00",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-20261022/version.buildinfo"
+        }
+      ]
+    },
+    {
+      "tag": "AX9000-local-PassWall-ECM-coexist-20261022",
+      "url": "https://github.com/xlz342/AX9000-v3-NSS/releases/tag/AX9000-local-PassWall-ECM-coexist-20261022",
+      "prerelease": true,
+      "assets": [
+        {
+          "name": "AX9000-local-PassWall-ECM-coexist-20261022-build-records.zip",
+          "size": 132077,
+          "digest": "sha256:5c724cadefdf72ca889ddd2d886a42402975c9a012cbaf927b0d8c24a4e5eb24",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-ECM-coexist-20261022/AX9000-local-PassWall-ECM-coexist-20261022-build-records.zip"
+        },
+        {
+          "name": "COEXIST-TEST-README.md",
+          "size": 2133,
+          "digest": "sha256:ac656ac8aef37d00aab4caeea2b201de978c8d2daa7fc708ea99be5ff749808f",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-ECM-coexist-20261022/COEXIST-TEST-README.md"
+        },
+        {
+          "name": "config.buildinfo",
+          "size": 4604,
+          "digest": "sha256:b91f39f54032905fb89e29beb0af54f89d27222b2e2a04baddc9f36d128ddb37",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-ECM-coexist-20261022/config.buildinfo"
+        },
+        {
+          "name": "config.seed",
+          "size": 4604,
+          "digest": "sha256:b91f39f54032905fb89e29beb0af54f89d27222b2e2a04baddc9f36d128ddb37",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-ECM-coexist-20261022/config.seed"
+        },
+        {
+          "name": "feeds.buildinfo",
+          "size": 696,
+          "digest": "sha256:c1e52b90e8d616d4f281e083b468cfec33bfabccc4cf23141abfabbd59e6a211",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-ECM-coexist-20261022/feeds.buildinfo"
+        },
+        {
+          "name": "immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock-squashfs-factory.ubi",
+          "size": 40763392,
+          "digest": "sha256:51120ab8cbf2e7dffe0952ace6573151a38423b0d554c222687b721b01151eb6",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-ECM-coexist-20261022/immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock-squashfs-factory.ubi"
+        },
+        {
+          "name": "immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock-squashfs-sysupgrade.bin",
+          "size": 39096606,
+          "digest": "sha256:f6e027b378b6dfb6f2c5c3b16f01eb13e2bc37f120c0ee1b4a4e670b90146871",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-ECM-coexist-20261022/immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock-squashfs-sysupgrade.bin"
+        },
+        {
+          "name": "immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock.manifest",
+          "size": 9327,
+          "digest": "sha256:4f57f17f641eaa76baa0543a7fcf3fe965ecdc7da1f065f113d24035f36e1d2c",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-ECM-coexist-20261022/immortalwrt-25.12.2-qualcommax-ipq807x-xiaomi_ax9000-stock.manifest"
+        },
+        {
+          "name": "local-packages.lock.json",
+          "size": 739,
+          "digest": "sha256:6a0e4a1c66caa70d17a3fc16d6ca1f515648b89d7adc86fea9b7521b4fb0458d",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-ECM-coexist-20261022/local-packages.lock.json"
+        },
+        {
+          "name": "profiles.json",
+          "size": 2317,
+          "digest": "sha256:ebcba0338d7d70049b92a360b18805b28c4cd87ab91d0b776709283505ab0f28",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-ECM-coexist-20261022/profiles.json"
+        },
+        {
+          "name": "README-local.txt",
+          "size": 587,
+          "digest": "sha256:210bb0bd08d3c1d7cf7b66b530275ed318f3720329a784b73b2cdbb37a2f81f8",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-ECM-coexist-20261022/README-local.txt"
+        },
+        {
+          "name": "SHA256SUMS",
+          "size": 1437,
+          "digest": "sha256:e9e671593d08103f462042ee15037aeafecd0148dfd93c8e80155db283d3d717",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-ECM-coexist-20261022/SHA256SUMS"
+        },
+        {
+          "name": "sources.lock.json",
+          "size": 478,
+          "digest": "sha256:967e03d997124cbac49637704f19b3865b99ed79a1c8759831e8ace12bc3827f",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-ECM-coexist-20261022/sources.lock.json"
+        },
+        {
+          "name": "test_coexist.py",
+          "size": 7924,
+          "digest": "sha256:99852d3b90c6458fab79164361fd8e912a3fc6f84e4355112fc22771afffe5d1",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-ECM-coexist-20261022/test_coexist.py"
+        },
+        {
+          "name": "validated-metadata.json",
+          "size": 262,
+          "digest": "sha256:decffeb38f2e48a654a20a40114a0fbd4dedd55598bb24990467fe1990c4930c",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-ECM-coexist-20261022/validated-metadata.json"
+        },
+        {
+          "name": "validation.json",
+          "size": 858,
+          "digest": "sha256:edfc52e05adfa144b35e68f3abb670077f2fe8f04e324ffe8bbd9fae8a44b68f",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-ECM-coexist-20261022/validation.json"
+        },
+        {
+          "name": "version.buildinfo",
+          "size": 20,
+          "digest": "sha256:2803fdd1bb171425b171068dc901dbd832b03d3ae26dd7e2499711bce0833b00",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-local-PassWall-ECM-coexist-20261022/version.buildinfo"
+        }
+      ]
+    },
+    {
+      "tag": "AX9000-v4-full-coexist-20261022",
+      "url": "https://github.com/xlz342/AX9000-v3-NSS/releases/tag/AX9000-v4-full-coexist-20261022",
+      "prerelease": true,
+      "assets": [
+        {
+          "name": "AX9000-v4-full-coexist-20261022-build-records.zip",
+          "size": 436492,
+          "digest": "sha256:3a623e4e883c397ea91fadf45505466451a6cd2256f853fe450d2c12e52e986b",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-full-coexist-20261022/AX9000-v4-full-coexist-20261022-build-records.zip"
+        },
+        {
+          "name": "COEXIST-TEST-README.md",
+          "size": 1476,
+          "digest": "sha256:8ba6a9b7b0d0c8d5da41dffe074e4828bc35d8b6d5b52ee2817d8a9d40a4339b",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-full-coexist-20261022/COEXIST-TEST-README.md"
+        },
+        {
+          "name": "config.buildinfo",
+          "size": 5271,
+          "digest": "sha256:5ac41bb45dc7677050b1284187f13518cd8a3afa9852bc59281b701eb744e001",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-full-coexist-20261022/config.buildinfo"
+        },
+        {
+          "name": "config.seed",
+          "size": 5271,
+          "digest": "sha256:5ac41bb45dc7677050b1284187f13518cd8a3afa9852bc59281b701eb744e001",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-full-coexist-20261022/config.seed"
+        },
+        {
+          "name": "feeds.buildinfo",
+          "size": 696,
+          "digest": "sha256:c1e52b90e8d616d4f281e083b468cfec33bfabccc4cf23141abfabbd59e6a211",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-full-coexist-20261022/feeds.buildinfo"
+        },
+        {
+          "name": "immortalwrt-25.12.2-20261022-qualcommax-ipq807x-xiaomi_ax9000-stock-squashfs-factory.ubi",
+          "size": 62652416,
+          "digest": "sha256:6a993bf037b70c6f400e5a3f6274b29d0cd513d45d9533a1fe61feafb0629662",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-full-coexist-20261022/immortalwrt-25.12.2-20261022-qualcommax-ipq807x-xiaomi_ax9000-stock-squashfs-factory.ubi"
+        },
+        {
+          "name": "immortalwrt-25.12.2-20261022-qualcommax-ipq807x-xiaomi_ax9000-stock-squashfs-sysupgrade.bin",
+          "size": 60231966,
+          "digest": "sha256:64b7aeb4fe680e333e3eb7dd56ba3cad85d0aad00c07e0bed00cfffcacde36f1",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-full-coexist-20261022/immortalwrt-25.12.2-20261022-qualcommax-ipq807x-xiaomi_ax9000-stock-squashfs-sysupgrade.bin"
+        },
+        {
+          "name": "immortalwrt-25.12.2-20261022-qualcommax-ipq807x-xiaomi_ax9000-stock.manifest",
+          "size": 9976,
+          "digest": "sha256:0b0603a7138b020480d471796cf104d8b4b7fdea623f8852507337119b468c25",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-full-coexist-20261022/immortalwrt-25.12.2-20261022-qualcommax-ipq807x-xiaomi_ax9000-stock.manifest"
+        },
+        {
+          "name": "local-packages.lock.json",
+          "size": 739,
+          "digest": "sha256:6a0e4a1c66caa70d17a3fc16d6ca1f515648b89d7adc86fea9b7521b4fb0458d",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-full-coexist-20261022/local-packages.lock.json"
+        },
+        {
+          "name": "plugin-validation.json",
+          "size": 879,
+          "digest": "sha256:74f34a43012b126927b832ee4d708a8314ed3cdc2d455c8552b580422312133d",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-full-coexist-20261022/plugin-validation.json"
+        },
+        {
+          "name": "profiles.json",
+          "size": 3103,
+          "digest": "sha256:7b4ed110a43b11b56962503da06f34aac59878c5713b281156744e3e74920368",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-full-coexist-20261022/profiles.json"
+        },
+        {
+          "name": "README-local.txt",
+          "size": 674,
+          "digest": "sha256:5f8538c507226caac7b2173bf101f41c0c084df8dab46b5bced7005616363106",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-full-coexist-20261022/README-local.txt"
+        },
+        {
+          "name": "SHA256SUMS",
+          "size": 1553,
+          "digest": "sha256:fdc71f58dfdf0a5304f416e1e90d35a1d58efb63bb2a3eb37c5acb64af8f9639",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-full-coexist-20261022/SHA256SUMS"
+        },
+        {
+          "name": "sources.lock.json",
+          "size": 478,
+          "digest": "sha256:967e03d997124cbac49637704f19b3865b99ed79a1c8759831e8ace12bc3827f",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-full-coexist-20261022/sources.lock.json"
+        },
+        {
+          "name": "test_coexist.py",
+          "size": 8238,
+          "digest": "sha256:ce7b5133dcb41923d026000e3d7db76c24635468779b3c567196b9841ee82905",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-full-coexist-20261022/test_coexist.py"
+        },
+        {
+          "name": "validated-metadata.json",
+          "size": 298,
+          "digest": "sha256:2c17cf93afa277dc3d0a0f4633bea2650f70be6078cc506db7321d6ceb95a33d",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-full-coexist-20261022/validated-metadata.json"
+        },
+        {
+          "name": "validation.json",
+          "size": 867,
+          "digest": "sha256:05e2c55bed2babe7a00d47df05ccb4af6c169288c411bfdd993661a366ba8c7a",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-full-coexist-20261022/validation.json"
+        },
+        {
+          "name": "version.buildinfo",
+          "size": 20,
+          "digest": "sha256:2803fdd1bb171425b171068dc901dbd832b03d3ae26dd7e2499711bce0833b00",
+          "browser_download_url": "https://github.com/xlz342/AX9000-v3-NSS/releases/download/AX9000-v4-full-coexist-20261022/version.buildinfo"
+        }
+      ]
+    }
+  ]
+}
